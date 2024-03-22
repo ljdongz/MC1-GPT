@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct MC1_projectApp: App {
     
-    
     var body: some Scene {
         WindowGroup {
             OnboardingView()

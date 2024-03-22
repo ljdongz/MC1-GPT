@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 
 struct Diary: Hashable {
+    var title: String
+    var date: String
+    var weather: String
+    var content: String
     var images: [ImageResource]
 }
 

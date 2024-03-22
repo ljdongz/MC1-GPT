@@ -8,8 +8,9 @@
 import Foundation
 
 struct Place: Hashable {
+    var id: UUID = UUID()
     var name: String
-    var startDate: Date
-    var endDate: Date
+    var startDate: String
+    var endDate: String
     var diaries: [Diary] = []
 }

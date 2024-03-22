@@ -14,50 +14,63 @@ struct CustomNavigationBar: View {
     let isDisplayBackButton: Bool
     let rightButtonAction: (() -> ())?
     let rightButtonType: NavigationBarButtonType
+    let title: String
     
     init(
         isDisplayBackButton: Bool = true,
         rightButtonAction: (()->())? = nil,
-        rightButtonType: NavigationBarButtonType = .edit
+        rightButtonType: NavigationBarButtonType = .edit,
+        title: String = ""
     ) {
         self.isDisplayBackButton = isDisplayBackButton
         self.rightButtonAction = rightButtonAction
         self.rightButtonType = rightButtonType
+        self.title = title
     }
     
     
     var body: some View {
-        HStack {
-            if isDisplayBackButton {
-                Button(
-                    action: { dismiss() },
-                    label: {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundStyle(Color.wh)
-                })
-                .frame(height: 25)
-            } else {
-                Spacer()
+        ZStack {
+            
+            Text("경주")
+                .font(.system(size: 20, weight: .medium))
+                .foregroundStyle(.wh)
+            
+            HStack {
+                if isDisplayBackButton {
+                    Button(
+                        action: { dismiss() },
+                        label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundStyle(Color.wh)
+                    })
                     .frame(height: 25)
-            }
-            
-            Spacer()
-            
-            if let action = rightButtonAction {
-                Button(
-                    action: {
-                        action()
-                    },
-                    label: {
-                        Text(rightButtonType.rawValue)
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundStyle(Color.wh)
-                })
+                } else {
+                    Spacer()
+                        .frame(height: 25)
+                }
+                
+                Spacer()
+                
+                
+                if let action = rightButtonAction {
+                    Button(
+                        action: {
+                            action()
+                        },
+                        label: {
+                            Text(rightButtonType.rawValue)
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundStyle(Color.wh)
+                    })
+                }
             }
         }
-        .padding()
+        .frame(height: 50)
+        .padding(.horizontal)
         .background(Color.bg.opacity(isDisplayBackButton ? 0.98 : 1))
+        
         
     }
 }
@@ -65,5 +78,5 @@ struct CustomNavigationBar: View {
 #Preview {
     CustomNavigationBar(isDisplayBackButton: true, rightButtonAction: {
         
-    }, rightButtonType: .create)
+    }, rightButtonType: .create, title: "경주")
 }

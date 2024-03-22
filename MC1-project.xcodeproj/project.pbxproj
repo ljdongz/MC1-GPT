@@ -20,6 +20,9 @@
 		57EAF2032BAC08B40041EC3D /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2022BAC08B40041EC3D /* CustomNavigationBar.swift */; };
 		57EAF2052BAC09030041EC3D /* NavigationBarButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2042BAC09030041EC3D /* NavigationBarButtonType.swift */; };
 		57EAF2082BAC0C910041EC3D /* DiaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2072BAC0C910041EC3D /* DiaryListView.swift */; };
+		57EAF20E2BAD26E00041EC3D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF20D2BAD26E00041EC3D /* String+Ext.swift */; };
+		57EAF2102BAD26E70041EC3D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */; };
+		57EAF2142BAD49550041EC3D /* DiaryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +40,9 @@
 		57EAF2022BAC08B40041EC3D /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		57EAF2042BAC09030041EC3D /* NavigationBarButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarButtonType.swift; sourceTree = "<group>"; };
 		57EAF2072BAC0C910041EC3D /* DiaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListView.swift; sourceTree = "<group>"; };
+		57EAF20D2BAD26E00041EC3D /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,7 @@
 			children = (
 				57771B9A2BAAC25F009C3E1E /* MC1_projectApp.swift */,
 				57EAF1FF2BAC056D0041EC3D /* Component */,
+				57EAF20B2BAD26C30041EC3D /* Core */,
 				57771BA92BAAC28C009C3E1E /* Feature */,
 				57771BA82BAAC286009C3E1E /* Model */,
 				57EAF1F92BABF7960041EC3D /* Resource */,
@@ -135,8 +142,8 @@
 		57EAF1FC2BABF9960041EC3D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				57771BAC2BAAC4A8009C3E1E /* Diary.swift */,
 				57771BAA2BAAC490009C3E1E /* Place.swift */,
+				57771BAC2BAAC4A8009C3E1E /* Diary.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -154,8 +161,26 @@
 			isa = PBXGroup;
 			children = (
 				57EAF2072BAC0C910041EC3D /* DiaryListView.swift */,
+				57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */,
 			);
 			path = Diary;
+			sourceTree = "<group>";
+		};
+		57EAF20B2BAD26C30041EC3D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				57EAF20C2BAD26CC0041EC3D /* Extension */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		57EAF20C2BAD26CC0041EC3D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				57EAF20D2BAD26E00041EC3D /* String+Ext.swift */,
+				57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,13 +257,16 @@
 				57771BAB2BAAC490009C3E1E /* Place.swift in Sources */,
 				57771B9B2BAAC25F009C3E1E /* MC1_projectApp.swift in Sources */,
 				57771BAF2BAAC80F009C3E1E /* HomeView.swift in Sources */,
+				57EAF2102BAD26E70041EC3D /* Date+Ext.swift in Sources */,
 				57EAF1F42BAAD0060041EC3D /* OnboardingViewModel.swift in Sources */,
 				57EAF1F22BAACFC80041EC3D /* OnboardingView.swift in Sources */,
 				57EAF2032BAC08B40041EC3D /* CustomNavigationBar.swift in Sources */,
 				57EAF2052BAC09030041EC3D /* NavigationBarButtonType.swift in Sources */,
+				57EAF2142BAD49550041EC3D /* DiaryListViewModel.swift in Sources */,
 				57771BB12BAAC885009C3E1E /* HomeViewModel.swift in Sources */,
 				57EAF2082BAC0C910041EC3D /* DiaryListView.swift in Sources */,
 				57771BAD2BAAC4A8009C3E1E /* Diary.swift in Sources */,
+				57EAF20E2BAD26E00041EC3D /* String+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,27 +23,32 @@ struct HomeView: View {
                 
                 
                 LazyVGrid(columns: homeViewModel.columns) {
-                    ForEach(homeViewModel.currentPlaces, id: \.self) { place in
+                    ForEach(
+                        homeViewModel.places.filter {
+                            // text != "" 인 경우는 text가 포함된 여행지만 필터링
+                            // text == ""인 경우 모든 여행지 가져오기
+                            $0.name.hasPrefix(homeViewModel.text) ||
+                            homeViewModel.text == ""
+                        }, id: \.self
+                    ) { place in
                         PlaceView(viewModel: homeViewModel, place: place)
                     }
                 }
                 .padding(.horizontal)
-                .animation(.spring, value: homeViewModel.currentPlaces)
+                .animation(.spring, value: homeViewModel.places)
+                .animation(.spring, value: homeViewModel.text)
             }
             .frame(maxWidth: .infinity)
             .scrollIndicators(.hidden)
-            
             .overlay {
                 CircleButtonView()
-                    .padding(20)
-                
+                    .padding(.vertical, 50)
+                    .padding(.horizontal, 25)
             }
         }
         .background(
             Color.bg.ignoresSafeArea(.all)
         )
-        
-        
     }
 }
 
@@ -57,6 +62,7 @@ fileprivate struct SearchBar: View {
     
     fileprivate var body: some View {
         HStack {
+            
             Image(._1_1)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -82,6 +88,29 @@ fileprivate struct SearchBar: View {
             }
             .background(.second)
             .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            Button(
+                action: { },
+                label: {
+                    ZStack {
+                        Color.second
+                        
+                        Image(systemName: "slider.horizontal.3")
+                            .foregroundStyle(.wh)
+                            .font(.system(size: 20, weight: .medium))
+                        
+                        Picker("Select a paint color", selection: $viewModel.sortType) {
+                            ForEach(SortType.allCases, id: \.self) {
+                                Text($0.rawValue)
+                                        }
+                                    }
+                        .pickerStyle(.menu)
+                        .tint(.clear)
+                    }
+                    .frame(width: 50)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    
+            })
         }
         .background(.bg)
         .frame(height: 50)
@@ -94,13 +123,21 @@ fileprivate struct AnnouncementView: View {
     
     fileprivate var body: some View {
         ZStack {
-            Image(.sample0)
-                .resizable()
-                .opacity(0.25)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .frame(height: 100)
-                .shadow(color: .black, radius: 1, x: 5, y: 5)
             
+            Rectangle()
+                .foregroundStyle(.bg)
+                .frame(height: 100)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(color: .black, radius: 1, x: 5, y: 5)
+                .opacity(0.25)
+            
+            Image(.airplane)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .opacity(0.25)
+                .frame(height: 100)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 15))
         }
     }
 }
@@ -166,7 +203,6 @@ fileprivate struct OngoingView: View {
 fileprivate struct PlaceView: View {
     
     @ObservedObject private var viewModel: HomeViewModel
-    
     let place: Place
     
     init(viewModel: HomeViewModel, place: Place) {
@@ -175,33 +211,40 @@ fileprivate struct PlaceView: View {
     }
     
     fileprivate var body: some View {
-        ZStack {
-            Rectangle()
-                .foregroundStyle(.bg)
-                .frame(height: 170)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .shadow(color: .black, radius: 1, x: 5, y: 5)
-                .opacity(0.25)
+        NavigationLink {
+            DiaryListView(homeViewModel: viewModel, place: place)
             
-            Image(place.diaries[0].images[0])
-                .resizable()
-                .opacity(0.25)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .frame(height: 170)
+        } label: {
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.bg)
+                    .frame(height: 170)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .shadow(color: .black, radius: 1, x: 5, y: 5)
+                    .opacity(0.25)
                 
-            
-            
-            VStack(alignment: .center) {
+                Image(place.diaries[0].images[0])
+                    .resizable()
+                    .opacity(0.25)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .frame(height: 170)
+                    
                 
-                Text(place.name)
-                    .font(.system(size: 25, weight: .bold))
-                    .foregroundStyle(.wh)
                 
-                Text("24.03.02 ~ 24.12.13")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(.gr)
+                VStack(alignment: .center) {
+                    
+                    Text(place.name)
+                        .font(.system(size: 25, weight: .bold))
+                        .foregroundStyle(.wh)
+                    
+                    Text("\(place.startDate) ~ \(place.endDate)")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(.gr)
+                }
             }
         }
+
+        
         
     }
 }
@@ -217,8 +260,7 @@ fileprivate struct CircleButtonView: View {
                 
                 
                 NavigationLink {
-                    DiaryListView()
-                        .navigationBarBackButtonHidden()
+                    
                 } label: {
                     ZStack {
                         
