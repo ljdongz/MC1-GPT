@@ -26,6 +26,8 @@
 		57EAF21C2BAE98560041EC3D /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF21B2BAE98560041EC3D /* UINavigationController+Ext.swift */; };
 		57EAF21F2BAEAE020041EC3D /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */; };
 		57EAF2212BAEAE0A0041EC3D /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */; };
+		57EAF2242BAEEC750041EC3D /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2232BAEEC750041EC3D /* PlaceView.swift */; };
+		57EAF2262BAEEC7C0041EC3D /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2252BAEEC7C0041EC3D /* PlaceViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		57EAF21B2BAE98560041EC3D /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
 		57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
 		57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		57EAF2232BAEEC750041EC3D /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
+		57EAF2252BAEEC7C0041EC3D /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +117,6 @@
 			children = (
 				57EAF1F02BAACFB90041EC3D /* Onboarding */,
 				57771BAE2BAAC583009C3E1E /* Home */,
-				57EAF2062BAC0C830041EC3D /* DiaryList */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -121,6 +124,8 @@
 		57771BAE2BAAC583009C3E1E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				57EAF2222BAEEC4F0041EC3D /* Place */,
+				57EAF2062BAC0C830041EC3D /* DiaryList */,
 				57771B9C2BAAC25F009C3E1E /* HomeView.swift */,
 				57771BB02BAAC885009C3E1E /* HomeViewModel.swift */,
 			);
@@ -194,10 +199,19 @@
 		57EAF21D2BAEADF90041EC3D /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */,
 				57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */,
+				57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */,
 			);
 			path = Diary;
+			sourceTree = "<group>";
+		};
+		57EAF2222BAEEC4F0041EC3D /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				57EAF2232BAEEC750041EC3D /* PlaceView.swift */,
+				57EAF2252BAEEC7C0041EC3D /* PlaceViewModel.swift */,
+			);
+			path = Place;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,11 +251,12 @@
 			};
 			buildConfigurationList = 57771B922BAAC25F009C3E1E /* Build configuration list for PBXProject "MC1-project" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 57771B8E2BAAC25F009C3E1E;
 			productRefGroup = 57771B982BAAC25F009C3E1E /* Products */;
@@ -281,12 +296,14 @@
 				57EAF2032BAC08B40041EC3D /* CustomNavigationBar.swift in Sources */,
 				57EAF2052BAC09030041EC3D /* NavigationBarButtonType.swift in Sources */,
 				57EAF21C2BAE98560041EC3D /* UINavigationController+Ext.swift in Sources */,
+				57EAF2262BAEEC7C0041EC3D /* PlaceViewModel.swift in Sources */,
 				57EAF2142BAD49550041EC3D /* DiaryListViewModel.swift in Sources */,
 				57771BB12BAAC885009C3E1E /* HomeViewModel.swift in Sources */,
 				57EAF2082BAC0C910041EC3D /* DiaryListView.swift in Sources */,
 				57771BAD2BAAC4A8009C3E1E /* Diary.swift in Sources */,
 				57EAF2212BAEAE0A0041EC3D /* DiaryView.swift in Sources */,
 				57EAF20E2BAD26E00041EC3D /* String+Ext.swift in Sources */,
+				57EAF2242BAEEC750041EC3D /* PlaceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

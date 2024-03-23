@@ -18,7 +18,8 @@ struct HomeView: View {
                 .padding()
             
             ScrollView {
-                OngoingView(viewModel: homeViewModel)
+                //OngoingView(viewModel: homeViewModel)
+                AnnouncementView()
                     .padding()
                 
                 
@@ -31,7 +32,7 @@ struct HomeView: View {
                             homeViewModel.text == ""
                         }, id: \.self
                     ) { place in
-                        PlaceView(viewModel: homeViewModel, place: place)
+                        PlaceCellView(viewModel: homeViewModel, place: place)
                     }
                 }
                 .padding(.horizontal)
@@ -41,7 +42,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
             .scrollIndicators(.hidden)
             .overlay {
-                CircleButtonView()
+                CircleButtonView(homeViewModel: homeViewModel)
                     .padding(.vertical, 50)
                     .padding(.horizontal, 25)
             }
@@ -99,8 +100,8 @@ fileprivate struct SearchBar: View {
                             .foregroundStyle(.wh)
                             .font(.system(size: 20, weight: .medium))
                         
-                        Picker("Select a paint color", selection: $viewModel.sortType) {
-                            ForEach(SortType.allCases, id: \.self) {
+                        Picker("", selection: $viewModel.sortType) {
+                            ForEach(HomeViewModel.SortType.allCases, id: \.self) {
                                 Text($0.rawValue)
                                         }
                                     }
@@ -126,18 +127,27 @@ fileprivate struct AnnouncementView: View {
             
             Rectangle()
                 .foregroundStyle(.bg)
-                .frame(height: 100)
+                .frame(height: 130)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .shadow(color: .black, radius: 1, x: 5, y: 5)
-                .opacity(0.25)
+                .opacity(0.4)
             
             Image(.airplane)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .opacity(0.25)
-                .frame(height: 100)
+                .opacity(0.4)
+                .frame(height: 130)
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            VStack(alignment: .leading, spacing: 10) {
+                Text("새로운 여행을 계획 해보세요.")
+                    .font(.system(size: 24, weight: .bold))
+                Text("새로운 경험이 여러분을 기다리고 있어요.")
+                    .font(.system(size: 18, weight: .semibold))
+            }
+            .foregroundStyle(.wh)
+            
         }
     }
 }
@@ -159,11 +169,11 @@ fileprivate struct OngoingView: View {
                 .frame(height: 130)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .shadow(color: .black, radius: 1, x: 5, y: 5)
-                .opacity(0.25)
+                .opacity(0.4)
             
             Image(.sample0)
                 .resizable()
-                .opacity(0.25)
+                .opacity(0.4)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(height: 130)
             
@@ -200,7 +210,7 @@ fileprivate struct OngoingView: View {
 }
 
 // MARK: - 여행지
-fileprivate struct PlaceView: View {
+fileprivate struct PlaceCellView: View {
     
     @ObservedObject private var viewModel: HomeViewModel
     let place: Place
@@ -222,11 +232,11 @@ fileprivate struct PlaceView: View {
                     .frame(height: 170)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .shadow(color: .black, radius: 1, x: 5, y: 5)
-                    .opacity(0.25)
+                    .opacity(0.4)
                 
                 Image(place.diaries[0].images[0])
                     .resizable()
-                    .opacity(0.25)
+                    .opacity(0.4)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .frame(height: 170)
                     
@@ -239,19 +249,22 @@ fileprivate struct PlaceView: View {
                         .foregroundStyle(.wh)
                     
                     Text("\(place.startDate) ~ \(place.endDate)")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(.gr)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.wh)
                 }
             }
         }
-
-        
-        
     }
 }
 
 // MARK: - 여행지 생성 버튼
 fileprivate struct CircleButtonView: View {
+    
+    @ObservedObject private var homeViewModel: HomeViewModel
+    
+    init(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+    }
     
     var body: some View {
         VStack {
@@ -259,9 +272,9 @@ fileprivate struct CircleButtonView: View {
             HStack {
                 Spacer()
                 
-                
                 NavigationLink {
-                    
+                    PlaceView(placeViewModel: PlaceViewModel())
+                        .environmentObject(homeViewModel)
                 } label: {
                     ZStack {
                         

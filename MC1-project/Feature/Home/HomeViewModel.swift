@@ -9,6 +9,15 @@ import Foundation
 import SwiftUI
 
 class HomeViewModel: ObservableObject {
+    
+    enum SortType: String, CaseIterable {
+        case name = "이름순"
+        case recent = "최신순"
+        case longest = "긴 여행순"
+        case shortest = "짧은 여행순"
+        case count = "일지개수순"
+    }
+    
     @Published var places: [Place]
     @Published var columns: [GridItem]
     @Published var text: String
@@ -79,6 +88,10 @@ class HomeViewModel: ObservableObject {
         ]
     }
     
+    
+}
+
+extension HomeViewModel {
     func changeColumns(_ count: Int) {
         self.columns = Array(repeating: .init(.flexible()), count: count)
     }
@@ -97,12 +110,4 @@ class HomeViewModel: ObservableObject {
             places.sort { $0.diaries.count > $1.diaries.count }
         }
     }
-}
-
-enum SortType: String, CaseIterable {
-    case name = "이름순"
-    case recent = "최신순"
-    case longest = "여행기간긴순"
-    case shortest = "여행기간짧은순"
-    case count = "일지개수순"
 }

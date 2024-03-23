@@ -31,7 +31,7 @@ struct DiaryListView: View {
                 Color.bg.ignoresSafeArea(.all)
             )
             .overlay {
-                CircleButtonView()
+                CircleButtonView(diaryListViewModel: diaryListViewModel)
                     .padding(.bottom, 50)
                     .padding(.horizontal, 25)
             }
@@ -56,7 +56,7 @@ fileprivate struct DiaryListCellView: View {
                     .foregroundStyle(.second)
                 
                 Rectangle()
-                    .frame(width: 2, height: .infinity)
+                    .frame(width: 2)
                     .foregroundStyle(.second)
                     .clipShape(RoundedRectangle(cornerRadius: 1))
             }
@@ -95,11 +95,12 @@ fileprivate struct DiaryListCellView: View {
     }
 }
 
-
-
-
-
 fileprivate struct CircleButtonView: View {
+    @ObservedObject private var diaryListViewModel: DiaryListViewModel
+    
+    init(diaryListViewModel: DiaryListViewModel) {
+        self.diaryListViewModel = diaryListViewModel
+    }
     
     var body: some View {
         VStack {
@@ -107,9 +108,15 @@ fileprivate struct CircleButtonView: View {
             HStack {
                 Spacer()
                 
-                
                 NavigationLink {
-                    Text("test")
+                    DiaryView(
+                        diaryViewModel: DiaryViewModel(
+                            diary: Diary()
+                        ), isCreateMode: true
+                    )
+                    .environmentObject(diaryListViewModel)
+                    .navigationBarBackButtonHidden()
+                    
                 } label: {
                     ZStack {
                         

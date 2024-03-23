@@ -14,13 +14,27 @@ struct Diary: Hashable {
     var weather: [WeatherType]
     var content: String
     var images: [ImageResource]
+    
+    init(
+        title: String = "",
+        date: String = "",
+        weather: [WeatherType] = [],
+        content: String = "",
+        images: [ImageResource] = []
+    ) {
+        self.title = title
+        self.date = date
+        self.weather = weather
+        self.content = content
+        self.images = images
+    }
 }
 
-enum WeatherType: String {
-    case sunny = "맑음"
-    case cloudy = "흐림"
-    case rain = "비"
-    case windy = "바람"
-    case lightning = "번개"
-    case snow = "눈"
+enum WeatherType: String, CaseIterable {
+    case sunny = "sun.max.fill"
+    case cloudy = "cloud.fill"
+    case rain = "cloud.heavyrain.fill"
+    case lightning = "cloud.bolt.fill"
+    case snow = "cloud.snow.fill"
+    case windy = "wind"
 }
