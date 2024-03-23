@@ -212,8 +212,9 @@ fileprivate struct PlaceView: View {
     
     fileprivate var body: some View {
         NavigationLink {
-            DiaryListView(homeViewModel: viewModel, place: place)
-            
+            DiaryListView(diaryListViewModel: DiaryListViewModel(place: place))
+                .environmentObject(viewModel)
+                .navigationBarBackButtonHidden()
         } label: {
             ZStack {
                 Rectangle()

@@ -8,5 +8,9 @@
 import Foundation
 
 class DiaryListViewModel: ObservableObject {
+    @Published var place: Place
     
+    init(place: Place) {
+        self.place = place
+    }
 }

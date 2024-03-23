@@ -9,26 +9,18 @@ import SwiftUI
 
 struct DiaryListView: View {
     
-    @StateObject private var diaryListViewModel = DiaryListViewModel()
-    @ObservedObject private var homeViewModel: HomeViewModel
-    
-    let place: Place
-
-    
-    init(homeViewModel: HomeViewModel, place: Place) {
-        self.homeViewModel = homeViewModel
-        self.place = place
-    }
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @StateObject var diaryListViewModel: DiaryListViewModel
 
     var body: some View {
         
         VStack(spacing: 0) {
-            CustomNavigationBar(title: "경주")
+            CustomNavigationBar(title: diaryListViewModel.place.name)
             
             ScrollView {
                 LazyVStack(content: {
-                    ForEach(1...10, id: \.self) { count in
-                        DiaryView()
+                    ForEach(diaryListViewModel.place.diaries, id: \.self) { diary in
+                        DiaryListCellView(diary: diary)
                             .padding(.horizontal, 20)
                     }
                 })
@@ -47,7 +39,13 @@ struct DiaryListView: View {
     }
 }
 
-fileprivate struct DiaryView: View {
+fileprivate struct DiaryListCellView: View {
+    
+    let diary: Diary
+    
+    init(diary: Diary) {
+        self.diary = diary
+    }
     
     fileprivate var body: some View {
         HStack(spacing: 20) {
@@ -64,19 +62,19 @@ fileprivate struct DiaryView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("24.01.01")
+                Text(diary.date)
                     .foregroundStyle(.gr)
                     .font(.system(size: 14, weight: .bold))
                 
-                Text("타이틀")
+                Text(diary.title)
                     .foregroundStyle(.gr)
                     .font(.system(size: 40, weight: .medium))
                 
-                Text("Description")
+                Text(diary.content)
                     .foregroundStyle(.gr)
-                    .font(.system(size: 20, weight: .medium))
+                    .font(.system(size: 16, weight: .medium))
                 
-                Image(.airplane)
+                Image(diary.images[0])
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxWidth: .infinity, maxHeight: 200)
@@ -131,5 +129,52 @@ fileprivate struct CircleButtonView: View {
 }
 
 #Preview {
-    DiaryListView(homeViewModel: HomeViewModel(), place: Place(name: "서울", startDate: "24.01.01", endDate: "24.01.03", diaries: []))
+    DiaryListView(
+        diaryListViewModel: .init(
+            place: Place(
+                name: "서울",
+                startDate: "24.01.01",
+                endDate: "24.01.03",
+                diaries: [
+                    Diary(
+                        title: "1번",
+                        date: "24.01.01",
+                        weather: [.sunny],
+                        content: "content\ncontentconteontcono\nocnno",
+                        images: [
+                            .airplane
+                        ]
+                    ),
+                    Diary(
+                        title: "2번",
+                        date: "24.01.02",
+                        weather: [.sunny],
+                        content: "포항항항하아항하앟아항항",
+                        images: [
+                            .sample0
+                        ]
+                    ),
+                    Diary(
+                        title: "3번",
+                        date: "24.01.03",
+                        weather: [.sunny],
+                        content: "content\ncon\no\noo\nocnno",
+                        images: [
+                            .sample1
+                        ]
+                    )
+                    ,Diary(
+                        title: "4번",
+                        date: "24.01.04",
+                        weather: [.sunny],
+                        content: "contento",
+                        images: [
+                            .sample2
+                        ]
+                    )
+                ]
+            )
+        )
+    )
 }
+

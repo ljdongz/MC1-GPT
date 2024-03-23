@@ -23,6 +23,9 @@
 		57EAF20E2BAD26E00041EC3D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF20D2BAD26E00041EC3D /* String+Ext.swift */; };
 		57EAF2102BAD26E70041EC3D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */; };
 		57EAF2142BAD49550041EC3D /* DiaryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */; };
+		57EAF21C2BAE98560041EC3D /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF21B2BAE98560041EC3D /* UINavigationController+Ext.swift */; };
+		57EAF21F2BAEAE020041EC3D /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */; };
+		57EAF2212BAEAE0A0041EC3D /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +46,9 @@
 		57EAF20D2BAD26E00041EC3D /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListViewModel.swift; sourceTree = "<group>"; };
+		57EAF21B2BAE98560041EC3D /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
+		57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,7 @@
 			children = (
 				57EAF1F02BAACFB90041EC3D /* Onboarding */,
 				57771BAE2BAAC583009C3E1E /* Home */,
+				57EAF2062BAC0C830041EC3D /* DiaryList */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -116,7 +123,6 @@
 			children = (
 				57771B9C2BAAC25F009C3E1E /* HomeView.swift */,
 				57771BB02BAAC885009C3E1E /* HomeViewModel.swift */,
-				57EAF2062BAC0C830041EC3D /* Diary */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -157,13 +163,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		57EAF2062BAC0C830041EC3D /* Diary */ = {
+		57EAF2062BAC0C830041EC3D /* DiaryList */ = {
 			isa = PBXGroup;
 			children = (
+				57EAF21D2BAEADF90041EC3D /* Diary */,
 				57EAF2072BAC0C910041EC3D /* DiaryListView.swift */,
 				57EAF2132BAD49540041EC3D /* DiaryListViewModel.swift */,
 			);
-			path = Diary;
+			path = DiaryList;
 			sourceTree = "<group>";
 		};
 		57EAF20B2BAD26C30041EC3D /* Core */ = {
@@ -179,8 +186,18 @@
 			children = (
 				57EAF20D2BAD26E00041EC3D /* String+Ext.swift */,
 				57EAF20F2BAD26E70041EC3D /* Date+Ext.swift */,
+				57EAF21B2BAE98560041EC3D /* UINavigationController+Ext.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		57EAF21D2BAEADF90041EC3D /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				57EAF21E2BAEAE020041EC3D /* DiaryViewModel.swift */,
+				57EAF2202BAEAE0A0041EC3D /* DiaryView.swift */,
+			);
+			path = Diary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,15 +274,18 @@
 				57771BAB2BAAC490009C3E1E /* Place.swift in Sources */,
 				57771B9B2BAAC25F009C3E1E /* MC1_projectApp.swift in Sources */,
 				57771BAF2BAAC80F009C3E1E /* HomeView.swift in Sources */,
+				57EAF21F2BAEAE020041EC3D /* DiaryViewModel.swift in Sources */,
 				57EAF2102BAD26E70041EC3D /* Date+Ext.swift in Sources */,
 				57EAF1F42BAAD0060041EC3D /* OnboardingViewModel.swift in Sources */,
 				57EAF1F22BAACFC80041EC3D /* OnboardingView.swift in Sources */,
 				57EAF2032BAC08B40041EC3D /* CustomNavigationBar.swift in Sources */,
 				57EAF2052BAC09030041EC3D /* NavigationBarButtonType.swift in Sources */,
+				57EAF21C2BAE98560041EC3D /* UINavigationController+Ext.swift in Sources */,
 				57EAF2142BAD49550041EC3D /* DiaryListViewModel.swift in Sources */,
 				57771BB12BAAC885009C3E1E /* HomeViewModel.swift in Sources */,
 				57EAF2082BAC0C910041EC3D /* DiaryListView.swift in Sources */,
 				57771BAD2BAAC4A8009C3E1E /* Diary.swift in Sources */,
+				57EAF2212BAEAE0A0041EC3D /* DiaryView.swift in Sources */,
 				57EAF20E2BAD26E00041EC3D /* String+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

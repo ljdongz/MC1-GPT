@@ -32,7 +32,7 @@ struct CustomNavigationBar: View {
     var body: some View {
         ZStack {
             
-            Text("경주")
+            Text(title)
                 .font(.system(size: 20, weight: .medium))
                 .foregroundStyle(.wh)
             
