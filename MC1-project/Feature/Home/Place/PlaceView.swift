@@ -13,6 +13,8 @@ struct PlaceView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject var placeViewModel: PlaceViewModel
     
+    let isCreateMode: Bool
+    
     var body: some View {
         ZStack {
             
@@ -26,20 +28,32 @@ struct PlaceView: View {
                 
                 PeriodView(placeViewModel: placeViewModel)
                     .padding(.horizontal)
+                    .padding(.bottom)
                     
+                ThumbnailView(placeViewModel: placeViewModel)
+                    .padding(.horizontal)
+                    .padding(.bottom)
                 
                 SaveButton(placeViewModel: placeViewModel)
                     .padding()
                 Spacer()
             }
         }
-        .alert("저장하시겠습니까?",
-               isPresented: $placeViewModel.isAlert
+        .alert(
+            "저장하시겠습니까?",
+            isPresented: $placeViewModel.isAlert
         ) {
-            Button("취소") {
-                
-            }
+            Button("취소") { }
             Button("저장") {
+                if isCreateMode {
+                    homeViewModel.appendPlace(
+                        Place(
+                            name: placeViewModel.title,
+                            startDate: placeViewModel.startDate.convertToString(),
+                            endDate: placeViewModel.endDate.convertToString()
+                        )
+                    )
+                }
                 dismiss()
             }
         }
@@ -142,6 +156,33 @@ fileprivate struct PeriodView: View {
     }
 }
 
+// MARK: - 썸네일 설정 화면
+fileprivate struct ThumbnailView: View {
+    
+    @ObservedObject private var placeViewModel: PlaceViewModel
+    
+    init(placeViewModel: PlaceViewModel) {
+        self.placeViewModel = placeViewModel
+    }
+    
+    fileprivate var body: some View {
+        VStack {
+            HStack {
+                Text("사진")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(.wh)
+                Spacer()
+            }
+            
+            ZStack {
+                Color.second
+            }
+            .aspectRatio(2, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 15))
+        }
+    }
+}
+
 // MARK: - 저장 버튼
 fileprivate struct SaveButton: View {
     
@@ -166,15 +207,22 @@ fileprivate struct SaveButton: View {
                             .padding()
                         Spacer()
                     }
-                    .background(.org)
+                    .background(
+                        placeViewModel.title.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+                        ? .gray : .org
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             })
+            .disabled(
+                placeViewModel.title.trimmingCharacters(in: .whitespacesAndNewlines) == "" 
+                ? true : false
+            )
         }
         
     }
 }
 
 #Preview {
-    PlaceView(placeViewModel: PlaceViewModel())
+    PlaceView(placeViewModel: PlaceViewModel(), isCreateMode: true)
         .environmentObject(HomeViewModel())
 }

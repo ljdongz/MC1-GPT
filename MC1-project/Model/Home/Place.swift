@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Place: Hashable {
     var id: UUID = UUID()
     var name: String
     var startDate: String
     var endDate: String
+    var thumbnail: ImageResource = .airplane
     var diaries: [Diary] = []
 }

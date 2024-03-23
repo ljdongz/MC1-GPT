@@ -68,7 +68,7 @@ fileprivate struct SearchBar: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                
+            
             VStack {
                 Spacer()
                 HStack {
@@ -103,15 +103,15 @@ fileprivate struct SearchBar: View {
                         Picker("", selection: $viewModel.sortType) {
                             ForEach(HomeViewModel.SortType.allCases, id: \.self) {
                                 Text($0.rawValue)
-                                        }
-                                    }
+                            }
+                        }
                         .pickerStyle(.menu)
                         .tint(.clear)
                     }
                     .frame(width: 50)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     
-            })
+                })
         }
         .background(.bg)
         .frame(height: 50)
@@ -234,12 +234,12 @@ fileprivate struct PlaceCellView: View {
                     .shadow(color: .black, radius: 1, x: 5, y: 5)
                     .opacity(0.4)
                 
-                Image(place.diaries[0].images[0])
+                Image(place.thumbnail)
                     .resizable()
                     .opacity(0.4)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .frame(height: 170)
-                    
+                
                 
                 
                 VStack(alignment: .center) {
@@ -273,7 +273,7 @@ fileprivate struct CircleButtonView: View {
                 Spacer()
                 
                 NavigationLink {
-                    PlaceView(placeViewModel: PlaceViewModel())
+                    PlaceView(placeViewModel: PlaceViewModel(), isCreateMode: true)
                         .environmentObject(homeViewModel)
                 } label: {
                     ZStack {

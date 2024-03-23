@@ -91,6 +91,7 @@ class HomeViewModel: ObservableObject {
     
 }
 
+
 extension HomeViewModel {
     func changeColumns(_ count: Int) {
         self.columns = Array(repeating: .init(.flexible()), count: count)
@@ -109,5 +110,10 @@ extension HomeViewModel {
         case .count:
             places.sort { $0.diaries.count > $1.diaries.count }
         }
+    }
+    
+    func appendPlace(_ place: Place) {
+        self.places.append(place)
+        sortPlaces(self.sortType)
     }
 }
