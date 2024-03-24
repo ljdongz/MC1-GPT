@@ -43,7 +43,9 @@ class HomeViewModel: ObservableObject {
                 startDate: "24.02.11",
                 endDate: "24.02.21",
                 diaries: [
-                    Diary(title: "서울에 도착하다!", date: "24.02.11", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.sample0, .sample1])
+                    Diary(title: "서울에 도착하다!", date: "24.02.11", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [
+                        .init(.sample0), .init(.sample1)
+                    ])
                 ]
             ),
             Place(
@@ -51,7 +53,7 @@ class HomeViewModel: ObservableObject {
                 startDate: "24.03.01",
                 endDate: "24.03.11",
                 diaries: [
-                    Diary(title: "포항 살이 시작!", date: "24.03.01", weather: [.cloudy], content: "애플 아카데미 시작..!", images: [.sample0])
+                    Diary(title: "포항 살이 시작!", date: "24.03.01", weather: [.cloudy], content: "애플 아카데미 시작..!", images: [.init(.sample1)])
                 ]
             ),
             Place(
@@ -59,7 +61,7 @@ class HomeViewModel: ObservableObject {
                 startDate: "23.06.06",
                 endDate: "23.06.11",
                 diaries: [
-                    Diary(title: "경주 도착하다!", date: "24.06.06", weather: [.rain, .lightning], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.sample2, .sample1])
+                    Diary(title: "경주 도착하다!", date: "24.06.06", weather: [.rain, .lightning], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.init(.sample1), .init(.sample2)])
                 ]
             ),
             Place(
@@ -67,7 +69,7 @@ class HomeViewModel: ObservableObject {
                 startDate: "21.02.11",
                 endDate: "21.02.20",
                 diaries: [
-                    Diary(title: "첫 해외여행~", date: "24.02.11", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.sample3, .sample1, ._1_1])
+                    Diary(title: "첫 해외여행~", date: "24.02.11", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.init(.sample3), .init(.sample4)])
                 ]
             ),
             Place(
@@ -75,14 +77,14 @@ class HomeViewModel: ObservableObject {
                 startDate: "22.04.01",
                 endDate: "22.04.05",
                 diaries: [
-                    Diary(title: "바다 구경한 날", date: "24.04.03", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.sample5, .sample1])
+                    Diary(title: "바다 구경한 날", date: "24.04.03", weather: [.sunny], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.init(.sample5), .init(.sample4)])
                 ]
             ),Place(
                 name: "제주도",
                 startDate: "23.11.11",
                 endDate: "23.11.16",
                 diaries: [
-                    Diary(title: "제주 좋다~", date: "23.11.11", weather: [.snow], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.sample0, .sample1])
+                    Diary(title: "제주 좋다~", date: "23.11.11", weather: [.snow], content: "너무너무 좋다\n또 오고싶다 ^_^", images: [.init(.sample3), .init(.sample2)])
                 ]
             )
         ]

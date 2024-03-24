@@ -234,7 +234,7 @@ fileprivate struct PlaceCellView: View {
                     .shadow(color: .black, radius: 1, x: 5, y: 5)
                     .opacity(0.4)
                 
-                Image(place.thumbnail)
+                place.thumbnail
                     .resizable()
                     .opacity(0.4)
                     .clipShape(RoundedRectangle(cornerRadius: 15))

@@ -13,6 +13,10 @@ struct Place: Hashable {
     var name: String
     var startDate: String
     var endDate: String
-    var thumbnail: ImageResource = .airplane
+    var thumbnail: Image = Image(.airplane)
     var diaries: [Diary] = []
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

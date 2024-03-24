@@ -9,24 +9,29 @@ import Foundation
 import SwiftUI
 
 struct Diary: Hashable {
+    var id: UUID = UUID()
     var title: String
     var date: String
-    var weather: [WeatherType]
+    var weather: Set<WeatherType>
     var content: String
-    var images: [ImageResource]
+    var images: [Image]
     
     init(
         title: String = "",
         date: String = "",
-        weather: [WeatherType] = [],
+        weather: Set<WeatherType> = [],
         content: String = "",
-        images: [ImageResource] = []
+        images: [Image] = []
     ) {
         self.title = title
         self.date = date
         self.weather = weather
         self.content = content
         self.images = images
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

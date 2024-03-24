@@ -14,3 +14,12 @@ class DiaryListViewModel: ObservableObject {
         self.place = place
     }
 }
+
+extension DiaryListViewModel {
+    func appendDiary(_ diary: Diary) {
+        self.place.diaries.append(diary)
+        place.diaries.sort {
+            $0.date < $1.date
+        }
+    }
+}

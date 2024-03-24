@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PlaceView: View {
     
@@ -50,7 +51,8 @@ struct PlaceView: View {
                         Place(
                             name: placeViewModel.title,
                             startDate: placeViewModel.startDate.convertToString(),
-                            endDate: placeViewModel.endDate.convertToString()
+                            endDate: placeViewModel.endDate.convertToString(),
+                            thumbnail: placeViewModel.thumbnail
                         )
                     )
                 }
@@ -168,17 +170,26 @@ fileprivate struct ThumbnailView: View {
     fileprivate var body: some View {
         VStack {
             HStack {
-                Text("사진")
+                Text("썸네일")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(.wh)
                 Spacer()
             }
             
-            ZStack {
-                Color.second
+            placeViewModel.thumbnail
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 150, height: 150)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            PhotosPicker(selection: $placeViewModel.photosPickerItem) {
+                Text("추가")
+                    .frame(width: 150, height: 40)
+                    .background(.second)
+                    .foregroundStyle(.wh)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
-            .aspectRatio(2, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 15))
         }
     }
 }
@@ -223,6 +234,15 @@ fileprivate struct SaveButton: View {
 }
 
 #Preview {
-    PlaceView(placeViewModel: PlaceViewModel(), isCreateMode: true)
+    PlaceView(
+        placeViewModel: PlaceViewModel(
+            title: "",
+            startDate: .now,
+            endDate: .now,
+            isAlert: false,
+            thumbnail: .init(._1_1)
+        ),
+        isCreateMode: true
+    )
         .environmentObject(HomeViewModel())
 }

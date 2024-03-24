@@ -50,7 +50,6 @@ fileprivate struct DiaryListCellView: View {
     fileprivate var body: some View {
         HStack(spacing: 20) {
             VStack {
-                
                 Circle()
                     .frame(width: 10, height: 10)
                     .foregroundStyle(.second)
@@ -74,16 +73,12 @@ fileprivate struct DiaryListCellView: View {
                     .foregroundStyle(.gr)
                     .font(.system(size: 16, weight: .medium))
                 
-                Image(diary.images[0])
+                diary.images[0]
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .aspectRatio(1.5, contentMode: .fill)
+                    .frame(maxWidth: .infinity)
                     .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     
-                
-                
-             
                 Rectangle()
                     .frame(height: 2)
                     .foregroundStyle(.second)
@@ -149,7 +144,7 @@ fileprivate struct CircleButtonView: View {
                         weather: [.sunny],
                         content: "content\ncontentconteontcono\nocnno",
                         images: [
-                            .airplane
+                            .init(.airplane)
                         ]
                     ),
                     Diary(
@@ -158,7 +153,7 @@ fileprivate struct CircleButtonView: View {
                         weather: [.sunny],
                         content: "포항항항하아항하앟아항항",
                         images: [
-                            .sample0
+                            .init(.sample0)
                         ]
                     ),
                     Diary(
@@ -167,7 +162,7 @@ fileprivate struct CircleButtonView: View {
                         weather: [.sunny],
                         content: "content\ncon\no\noo\nocnno",
                         images: [
-                            .sample1
+                            .init(.sample1)
                         ]
                     )
                     ,Diary(
@@ -176,7 +171,7 @@ fileprivate struct CircleButtonView: View {
                         weather: [.sunny],
                         content: "contento",
                         images: [
-                            .sample2
+                            .init(.sample2)
                         ]
                     )
                 ]

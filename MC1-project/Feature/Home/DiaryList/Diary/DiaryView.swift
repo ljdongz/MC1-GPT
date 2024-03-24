@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct DiaryView: View {
     
@@ -22,6 +23,14 @@ struct DiaryView: View {
             ScrollView {
                 TitleView(diaryViewModel: diaryViewModel)
                     .padding()
+                
+                DateView(
+                    diaryViewModel: diaryViewModel,
+                    startDate: diaryListViewModel.place.startDate.convertToDate(),
+                    endDate: diaryListViewModel.place.endDate.convertToDate()
+                )
+                    .padding(.horizontal)
+                    .padding(.bottom)
                 
                 WeatherListView(diaryViewModel: diaryViewModel)
                     .padding(.horizontal)
@@ -48,6 +57,15 @@ struct DiaryView: View {
                 
             }
             Button("저장") {
+                diaryListViewModel.appendDiary(
+                    Diary(
+                        title: diaryViewModel.diary.title,
+                        date: diaryViewModel.diary.date,
+                        weather: diaryViewModel.diary.weather,
+                        content: diaryViewModel.diary.content,
+                        images: diaryViewModel.diary.images
+                    )
+                )
                 dismiss()
             }
         }
@@ -85,6 +103,58 @@ fileprivate struct TitleView: View {
             .padding()
             .background(.second)
             .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+        }
+    }
+}
+
+// MARK: - 날짜 선택 화면
+fileprivate struct DateView: View {
+    
+    @ObservedObject private var diaryViewModel: DiaryViewModel
+    @State private var selectedDate: Date
+    let startDate: Date
+    let endDate: Date
+    
+    init(
+        diaryViewModel: DiaryViewModel,
+        selectedDate: Date = Date(),
+        startDate: Date,
+        endDate: Date
+    ) {
+        self.diaryViewModel = diaryViewModel
+        self.selectedDate = selectedDate
+        self.startDate = startDate
+        self.endDate = endDate
+        self.selectedDate = startDate
+    }
+    
+    fileprivate var body: some View {
+        VStack {
+            HStack {
+                Text("날짜")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(.wh)
+                Spacer()
+            }
+            
+            DatePicker(
+                "",
+                selection: $selectedDate,
+                in: startDate...endDate,
+                displayedComponents: .date
+            )
+            .font(.system(size: 16, weight: .semibold))
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+            .background(.clear)
+            .datePickerStyle(.compact)
+            .labelsHidden()
+            .colorInvert()
+            
+        }
+        .onChange(of: selectedDate) { _, _ in
+            diaryViewModel.diary.date = selectedDate.convertToString()
         }
     }
 }
@@ -110,20 +180,50 @@ fileprivate struct WeatherListView: View {
             
             HStack {
                 ForEach(WeatherType.allCases, id: \.self) { weather in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15)
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(.second)
-                            
-                        
-                        Image(systemName: weather.rawValue)
-                            .foregroundStyle(.gr)
-                    }
-                    
-                    
+                    WeatherButton(
+                        diaryViewModel: diaryViewModel,
+                        weatherType: weather
+                    )
                 }
             }
             
+        }
+    }
+}
+
+// MARK: - 날씨 선택 버튼
+fileprivate struct WeatherButton: View {
+    
+    @ObservedObject private var diaryViewModel: DiaryViewModel
+    let weatherType: WeatherType
+    
+    init(diaryViewModel: DiaryViewModel, weatherType: WeatherType) {
+        self.diaryViewModel = diaryViewModel
+        self.weatherType = weatherType
+    }
+    
+    fileprivate var body: some View {
+        VStack {
+            Button(
+                action: {
+                    if diaryViewModel.diary.weather
+                        .contains(weatherType) {
+                        diaryViewModel.diary.weather.remove(weatherType)
+                    } else {
+                        diaryViewModel.diary.weather.insert(weatherType)
+                    }
+                }, label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15)
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(
+                                diaryViewModel.diary.weather.contains(weatherType) ? .org : .second
+                            )
+                        
+                        Image(systemName: weatherType.rawValue)
+                            .foregroundStyle(.gr)
+                    }
+            })
         }
     }
 }
@@ -132,6 +232,7 @@ fileprivate struct WeatherListView: View {
 fileprivate struct PhotoListView: View {
     
     @ObservedObject private var diaryViewModel: DiaryViewModel
+    @State private var selectedIndex = 0
     
     init(diaryViewModel: DiaryViewModel) {
         self.diaryViewModel = diaryViewModel
@@ -147,10 +248,47 @@ fileprivate struct PhotoListView: View {
             }
             
             ZStack {
-                Color.second
+                Text(
+                    diaryViewModel.diary.images.isEmpty ?
+                    "여행에서 촬영한 사진을 추가해보세요." : " "
+                )
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(.gray)
+                
+                TabView(selection: $selectedIndex) {
+                    ForEach(
+                        0..<diaryViewModel.diary.images.count,
+                        id: \.self) { index in
+                            diaryViewModel.diary.images[index]
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: .infinity)
+                        }
+                }
+                .tabViewStyle(.page)
+                
             }
-            .aspectRatio(2, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .aspectRatio(1.5, contentMode: .fill)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        .second,
+                        lineWidth: !diaryViewModel.diary.images.isEmpty ? 0 : 5
+                    )
+            )
+            
+            PhotosPicker(
+                selection: $diaryViewModel.photosPickerItems,
+                maxSelectionCount: 5,
+                selectionBehavior: .ordered
+            ) {
+                Text("추가")
+                    .frame(width: 200, height: 40)
+                    .background(.second)
+                    .foregroundStyle(.wh)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+            }
         }
     }
 }
@@ -180,8 +318,9 @@ fileprivate struct ContentView: View {
                     RoundedRectangle(cornerRadius: 15)
                 )
                 .frame(minHeight: 150)
-                .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                .fixedSize(horizontal: false, vertical: true)
                 .tint(.wh)
+                .foregroundStyle(.wh)
         }
     }
 }
@@ -219,5 +358,10 @@ fileprivate struct SaveButton: View {
 }
 
 #Preview {
-    DiaryView(diaryViewModel: DiaryViewModel(diary: Diary()), isCreateMode: true)
+    DiaryView(
+        diaryViewModel: DiaryViewModel(
+            diary: Diary(title: "", date: "24.01.01", weather: [], content: "", images: [])
+        ),
+        isCreateMode: true)
+    .environmentObject(DiaryListViewModel(place: Place(name: "경주", startDate: "24.01.01", endDate: "24.01.03")))
 }
