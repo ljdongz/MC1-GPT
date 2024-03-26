@@ -17,28 +17,59 @@ struct DiaryListView: View {
         VStack(spacing: 0) {
             CustomNavigationBar(title: diaryListViewModel.place.name)
             
-            ScrollView {
-                LazyVStack(content: {
-                    ForEach(diaryListViewModel.place.diaries, id: \.self) { diary in
-                        DiaryListCellView(diary: diary)
-                            .padding(.horizontal, 20)
-                    }
-                })
-                .padding(.top, 20)
-            }
-            .frame(maxWidth: .infinity)
-            .background(
-                Color.bg.ignoresSafeArea(.all)
-            )
-            .overlay {
-                CircleButtonView(
-                    homeViewModel: homeViewModel,
-                    diaryListViewModel: diaryListViewModel
+            if diaryListViewModel.place.diaries.isEmpty {
+                AnnouncementView()
+                    
+            } else {
+                ScrollView {
+                    LazyVStack(content: {
+                        ForEach(diaryListViewModel.place.diaries, id: \.self) { diary in
+                            DiaryListCellView(diary: diary)
+                                .padding(.horizontal, 20)
+                        }
+                    })
+                    .padding(.top, 20)
+                }
+                .frame(maxWidth: .infinity)
+                .background(
+                    Color.bg.ignoresSafeArea(.all)
                 )
-                .padding(.bottom, 50)
-                .padding(.horizontal, 25)
             }
+            
+            
         }
+        .overlay {
+            CircleButtonView(
+                homeViewModel: homeViewModel,
+                diaryListViewModel: diaryListViewModel
+            )
+            .padding(.bottom, 50)
+            .padding(.horizontal, 25)
+        }
+    }
+}
+
+// MARK: - 다이어리 리스트 안내 뷰
+fileprivate struct AnnouncementView: View {
+    
+    fileprivate var body: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Text("현재까지 작성된 일지가 없습니다.")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(.wh)
+                Spacer()
+            }
+            
+            Spacer()
+            
+        }
+        .background(
+            Color.bg.ignoresSafeArea(.all)
+        )
+        
     }
 }
 
@@ -168,44 +199,44 @@ fileprivate struct CircleButtonView: View {
                 startDate: "24.01.01",
                 endDate: "24.01.03",
                 diaries: [
-                    Diary(
-                        title: "1번",
-                        date: "24.01.01",
-                        weather: [.sunny, .cloudy, .rain],
-                        content: "content\ncontentconteontcono\nocnno",
-                        images: [
-                            .init(.airplane),
-                            .init(.airplane),
-                            .init(.airplane)
-                        ]
-                    ),
-                    Diary(
-                        title: "2번",
-                        date: "24.01.02",
-                        weather: [.sunny],
-                        content: "포항항항하아항하앟아항항",
-                        images: [
-                            .init(.sample0)
-                        ]
-                    ),
-                    Diary(
-                        title: "3번",
-                        date: "24.01.03",
-                        weather: [.sunny],
-                        content: "content\ncon\no\noo\nocnno",
-                        images: [
-                            .init(.sample1)
-                        ]
-                    )
-                    ,Diary(
-                        title: "4번",
-                        date: "24.01.04",
-                        weather: [.sunny],
-                        content: "contento",
-                        images: [
-                            .init(.sample2)
-                        ]
-                    )
+//                    Diary(
+//                        title: "1번",
+//                        date: "24.01.01",
+//                        weather: [.sunny, .cloudy, .rain],
+//                        content: "content\ncontentconteontcono\nocnno",
+//                        images: [
+//                            .init(.airplane),
+//                            .init(.airplane),
+//                            .init(.airplane)
+//                        ]
+//                    ),
+//                    Diary(
+//                        title: "2번",
+//                        date: "24.01.02",
+//                        weather: [.sunny],
+//                        content: "포항항항하아항하앟아항항",
+//                        images: [
+//                            .init(.sample0)
+//                        ]
+//                    ),
+//                    Diary(
+//                        title: "3번",
+//                        date: "24.01.03",
+//                        weather: [.sunny],
+//                        content: "content\ncon\no\noo\nocnno",
+//                        images: [
+//                            .init(.sample1)
+//                        ]
+//                    )
+//                    ,Diary(
+//                        title: "4번",
+//                        date: "24.01.04",
+//                        weather: [.sunny],
+//                        content: "contento",
+//                        images: [
+//                            .init(.sample2)
+//                        ]
+//                    )
                 ]
             )
         )

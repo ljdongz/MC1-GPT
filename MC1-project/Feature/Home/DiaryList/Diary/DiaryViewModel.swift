@@ -19,6 +19,22 @@ class DiaryViewModel: ObservableObject {
         }
     }
     @Published var isDisable: Bool = true
+    @Published var guideQuestionIndex: Int = 0
+    
+    static let guideQuestions: [String] = [
+        "위 사진에서 기억이 나는 장면은 무엇인가요?",
+        "오늘 하루 중 가장 기억에 남는 순간은 언제였나요?",
+        "오늘 있었던 일 중 꼭 기억하고 싶은 순간은 언제였나요?"
+    ]
+    
+    static let keywords: [String] = [
+        "아름답다.",
+        "예쁘다",
+        "눈부시다",
+        "아름답다.",
+        "예쁘다",
+        "눈부시다"
+    ]
     
     init(
         diary: Diary,

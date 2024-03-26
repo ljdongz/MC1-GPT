@@ -29,8 +29,8 @@ struct DiaryView: View {
                     startDate: diaryListViewModel.place.startDate.convertToDate(),
                     endDate: diaryListViewModel.place.endDate.convertToDate()
                 )
-                    .padding(.horizontal)
-                    .padding(.bottom)
+                .padding(.horizontal)
+                .padding(.bottom)
                 
                 WeatherListView(diaryViewModel: diaryViewModel)
                     .padding(.horizontal)
@@ -58,13 +58,6 @@ struct DiaryView: View {
             }
             Button("저장") {
                 homeViewModel.appendDiary(
-//                    Diary(
-//                        title: diaryViewModel.diary.title,
-//                        date: diaryViewModel.diary.date,
-//                        weather: diaryViewModel.diary.weather,
-//                        content: diaryViewModel.diary.content,
-//                        images: diaryViewModel.diary.images
-//                    ),
                     diaryViewModel.diary,
                     at: diaryListViewModel.place
                 )
@@ -108,7 +101,6 @@ fileprivate struct TitleView: View {
             .padding()
             .background(.second)
             .clipShape(RoundedRectangle(cornerRadius: 15))
-            
         }
     }
 }
@@ -229,7 +221,7 @@ fileprivate struct WeatherButton: View {
                         Image(systemName: weatherType.value)
                             .foregroundStyle(.gr)
                     }
-            })
+                })
         }
     }
 }
@@ -258,8 +250,8 @@ fileprivate struct PhotoListView: View {
                     diaryViewModel.diary.images.isEmpty ?
                     "여행에서 촬영한 사진을 추가해보세요." : " "
                 )
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(.gray)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(.gray)
                 
                 TabView(selection: $selectedIndex) {
                     ForEach(
@@ -283,6 +275,18 @@ fileprivate struct PhotoListView: View {
                     )
             )
             
+            if !diaryViewModel.diary.images.isEmpty {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(DiaryViewModel.keywords, id: \.self) { keyword in
+                            KeywordTagView(keyword: keyword)
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
+            }
+            
+            
             PhotosPicker(
                 selection: $diaryViewModel.photosPickerItems,
                 maxSelectionCount: 5,
@@ -296,6 +300,22 @@ fileprivate struct PhotoListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
         }
+    }
+}
+
+fileprivate struct KeywordTagView: View {
+    
+    let keyword: String
+    
+    fileprivate var body: some View {
+        HStack {
+            Text("# \(keyword)")
+                .foregroundStyle(.gr)
+                .font(.system(size: 16, weight: .semibold))
+        }
+        .padding(8)
+        .background(.second)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -316,6 +336,25 @@ fileprivate struct ContentView: View {
                     .foregroundStyle(.wh)
                 Spacer()
             }
+            
+            HStack {
+                Text("• \(DiaryViewModel.guideQuestions[diaryViewModel.guideQuestionIndex % 3])")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.gray)
+                    .padding(.horizontal, 5)
+                Spacer()
+                Button(
+                    action: {
+                        diaryViewModel.guideQuestionIndex += 1
+                    },
+                    label: {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 20))
+                            .foregroundStyle(.white)
+                })
+                .padding(.horizontal, 15)
+            }
+            .padding(.vertical, 5)
             
             TextEditor(text: $diaryViewModel.diary.content)
                 .scrollContentBackground(.hidden)
