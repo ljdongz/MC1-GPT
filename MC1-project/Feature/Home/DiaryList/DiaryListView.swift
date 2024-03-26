@@ -31,16 +31,21 @@ struct DiaryListView: View {
                 Color.bg.ignoresSafeArea(.all)
             )
             .overlay {
-                CircleButtonView(diaryListViewModel: diaryListViewModel)
-                    .padding(.bottom, 50)
-                    .padding(.horizontal, 25)
+                CircleButtonView(
+                    homeViewModel: homeViewModel,
+                    diaryListViewModel: diaryListViewModel
+                )
+                .padding(.bottom, 50)
+                .padding(.horizontal, 25)
             }
         }
     }
 }
 
+// MARK: - 다이어리 리스트 셀 뷰
 fileprivate struct DiaryListCellView: View {
     
+    @State private var selectedIndex = 0
     let diary: Diary
     
     init(diary: Diary) {
@@ -73,11 +78,21 @@ fileprivate struct DiaryListCellView: View {
                     .foregroundStyle(.gr)
                     .font(.system(size: 16, weight: .medium))
                 
-                diary.images[0]
-                    .resizable()
-                    .aspectRatio(1.5, contentMode: .fill)
-                    .frame(maxWidth: .infinity)
-                    .clipped()
+                
+                TabView(selection: $selectedIndex) {
+                    ForEach(
+                        0..<diary.images.count,
+                        id: \.self
+                    ) { index in
+                        diary.images[index]
+                            .resizable()
+                            .aspectRatio(1.5, contentMode: .fill)
+                            .clipped()
+                    }
+                }
+                .tabViewStyle(.page)
+                .frame(height: diary.images.isEmpty ? 0 : 250)
+                
                     
                 Rectangle()
                     .frame(height: 2)
@@ -90,10 +105,16 @@ fileprivate struct DiaryListCellView: View {
     }
 }
 
+// MARK: - 다이어리 생성 버튼
 fileprivate struct CircleButtonView: View {
+    @ObservedObject private var homeViewModel: HomeViewModel
     @ObservedObject private var diaryListViewModel: DiaryListViewModel
     
-    init(diaryListViewModel: DiaryListViewModel) {
+    init(
+        homeViewModel: HomeViewModel,
+        diaryListViewModel: DiaryListViewModel
+    ) {
+        self.homeViewModel = homeViewModel
         self.diaryListViewModel = diaryListViewModel
     }
     
@@ -109,6 +130,7 @@ fileprivate struct CircleButtonView: View {
                             diary: Diary()
                         ), isCreateMode: true
                     )
+                    .environmentObject(homeViewModel)
                     .environmentObject(diaryListViewModel)
                     .navigationBarBackButtonHidden()
                     
@@ -144,6 +166,8 @@ fileprivate struct CircleButtonView: View {
                         weather: [.sunny],
                         content: "content\ncontentconteontcono\nocnno",
                         images: [
+                            .init(.airplane),
+                            .init(.airplane),
                             .init(.airplane)
                         ]
                     ),

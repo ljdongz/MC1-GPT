@@ -18,6 +18,7 @@ class DiaryViewModel: ObservableObject {
             self.updateImages()
         }
     }
+    @Published var isDisable: Bool = true
     
     init(
         diary: Diary,
@@ -48,5 +49,14 @@ extension DiaryViewModel {
                 }
             }
         }
+    }
+    
+    func checkIsDisable() {
+        self.isDisable = (
+            diary.title.trimmingCharacters(in: .whitespacesAndNewlines) != "" &&
+            diary.weather.count != 0 &&
+            diary.images.count != 0 &&
+            diary.content.trimmingCharacters(in: .whitespacesAndNewlines) != ""
+        ) ? false : true
     }
 }

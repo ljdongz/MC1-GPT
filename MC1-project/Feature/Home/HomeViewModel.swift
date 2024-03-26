@@ -118,4 +118,13 @@ extension HomeViewModel {
         self.places.append(place)
         sortPlaces(self.sortType)
     }
+    
+    func appendDiary(_ diary: Diary, at place: Place) {
+        if let index = places.firstIndex(of: place) {
+            places[index].diaries.append(diary)
+            places[index].diaries.sort { $0.date < $1.date }
+        }
+    }
+    
+    //func updateDiary(_)
 }

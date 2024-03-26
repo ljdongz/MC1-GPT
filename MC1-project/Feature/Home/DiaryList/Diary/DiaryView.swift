@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct DiaryView: View {
-    
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     @EnvironmentObject private var diaryListViewModel: DiaryListViewModel
     @StateObject var diaryViewModel: DiaryViewModel
     @Environment(\.dismiss) private var dismiss
@@ -57,15 +57,20 @@ struct DiaryView: View {
                 
             }
             Button("저장") {
-                diaryListViewModel.appendDiary(
-                    Diary(
-                        title: diaryViewModel.diary.title,
-                        date: diaryViewModel.diary.date,
-                        weather: diaryViewModel.diary.weather,
-                        content: diaryViewModel.diary.content,
-                        images: diaryViewModel.diary.images
-                    )
+                homeViewModel.appendDiary(
+//                    Diary(
+//                        title: diaryViewModel.diary.title,
+//                        date: diaryViewModel.diary.date,
+//                        weather: diaryViewModel.diary.weather,
+//                        content: diaryViewModel.diary.content,
+//                        images: diaryViewModel.diary.images
+//                    ),
+                    diaryViewModel.diary,
+                    at: diaryListViewModel.place
                 )
+                
+                diaryListViewModel.appendDiary(diaryViewModel.diary)
+                
                 dismiss()
             }
         }
@@ -118,12 +123,10 @@ fileprivate struct DateView: View {
     
     init(
         diaryViewModel: DiaryViewModel,
-        selectedDate: Date = Date(),
         startDate: Date,
         endDate: Date
     ) {
         self.diaryViewModel = diaryViewModel
-        self.selectedDate = selectedDate
         self.startDate = startDate
         self.endDate = endDate
         self.selectedDate = startDate
@@ -152,6 +155,9 @@ fileprivate struct DateView: View {
             .labelsHidden()
             .colorInvert()
             
+        }
+        .onAppear {
+            diaryViewModel.diary.date = startDate.convertToString()
         }
         .onChange(of: selectedDate) { _, _ in
             diaryViewModel.diary.date = selectedDate.convertToString()
@@ -349,9 +355,16 @@ fileprivate struct SaveButton: View {
                             .padding()
                         Spacer()
                     }
-                    .background(.org)
+                    .background(diaryViewModel.isDisable ? .gray : .org)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-            })
+                }
+            )
+            .disabled(diaryViewModel.isDisable)
+            
+        }
+        .onChange(of: diaryViewModel.diary) {
+            diaryViewModel.checkIsDisable()
+            print(diaryViewModel.isDisable)
         }
         
     }

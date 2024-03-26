@@ -171,6 +171,7 @@ fileprivate struct OngoingView: View {
                 .shadow(color: .black, radius: 1, x: 5, y: 5)
                 .opacity(0.4)
             
+            
             Image(.sample0)
                 .resizable()
                 .opacity(0.4)
@@ -222,9 +223,11 @@ fileprivate struct PlaceCellView: View {
     
     fileprivate var body: some View {
         NavigationLink {
-            DiaryListView(diaryListViewModel: DiaryListViewModel(place: place))
-                .environmentObject(viewModel)
-                .navigationBarBackButtonHidden()
+            DiaryListView(
+                diaryListViewModel: DiaryListViewModel(place: place)
+            )
+            .environmentObject(viewModel)
+            .navigationBarBackButtonHidden()
         } label: {
             ZStack {
                 Rectangle()
@@ -275,6 +278,7 @@ fileprivate struct CircleButtonView: View {
                 NavigationLink {
                     PlaceView(placeViewModel: PlaceViewModel(), isCreateMode: true)
                         .environmentObject(homeViewModel)
+                        .navigationBarBackButtonHidden()
                 } label: {
                     ZStack {
                         
