@@ -74,6 +74,14 @@ fileprivate struct DiaryListCellView: View {
                     .foregroundStyle(.gr)
                     .font(.system(size: 40, weight: .medium))
                 
+                HStack {
+                    Spacer()
+                    ForEach(Array(diary.weather).sorted { $0.rawValue < $1.rawValue }, id: \.self) { type in
+                        Image(systemName: type.value)
+                            .foregroundStyle(.gr)
+                    }
+                }
+                
                 Text(diary.content)
                     .foregroundStyle(.gr)
                     .font(.system(size: 16, weight: .medium))
@@ -163,7 +171,7 @@ fileprivate struct CircleButtonView: View {
                     Diary(
                         title: "1번",
                         date: "24.01.01",
-                        weather: [.sunny],
+                        weather: [.sunny, .cloudy, .rain],
                         content: "content\ncontentconteontcono\nocnno",
                         images: [
                             .init(.airplane),
@@ -202,5 +210,6 @@ fileprivate struct CircleButtonView: View {
             )
         )
     )
+    .environmentObject(HomeViewModel())
 }
 

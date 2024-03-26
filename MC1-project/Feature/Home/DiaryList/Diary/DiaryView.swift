@@ -185,7 +185,7 @@ fileprivate struct WeatherListView: View {
             }
             
             HStack {
-                ForEach(WeatherType.allCases, id: \.self) { weather in
+                ForEach(WeatherType.allCases.sorted { $0.rawValue < $1.rawValue }, id: \.self) { weather in
                     WeatherButton(
                         diaryViewModel: diaryViewModel,
                         weatherType: weather
@@ -226,7 +226,7 @@ fileprivate struct WeatherButton: View {
                                 diaryViewModel.diary.weather.contains(weatherType) ? .org : .second
                             )
                         
-                        Image(systemName: weatherType.rawValue)
+                        Image(systemName: weatherType.value)
                             .foregroundStyle(.gr)
                     }
             })
@@ -364,7 +364,6 @@ fileprivate struct SaveButton: View {
         }
         .onChange(of: diaryViewModel.diary) {
             diaryViewModel.checkIsDisable()
-            print(diaryViewModel.isDisable)
         }
         
     }

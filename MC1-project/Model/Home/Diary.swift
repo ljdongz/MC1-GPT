@@ -36,10 +36,16 @@ struct Diary: Hashable {
 }
 
 enum WeatherType: String, CaseIterable {
-    case sunny = "sun.max.fill"
-    case cloudy = "cloud.fill"
-    case rain = "cloud.heavyrain.fill"
-    case lightning = "cloud.bolt.fill"
-    case snow = "cloud.snow.fill"
-    case windy = "wind"
+    case sunny = "1sun.max.fill"
+    case cloudy = "2cloud.fill"
+    case rain = "3cloud.heavyrain.fill"
+    case lightning = "4cloud.bolt.fill"
+    case snow = "5cloud.snow.fill"
+    case windy = "6wind"
+    
+    var value: String {
+        return self.rawValue[1...]
+    }
 }
+
+

@@ -15,3 +15,32 @@ extension String {
         return formatter.date(from: self)!
     }
 }
+
+// MARK: - subscript
+extension String {
+    subscript(index: Range<Int>) -> Self {
+        get {
+            let start = self.index(self.startIndex, offsetBy: index.lowerBound)
+            let end = self.index(self.startIndex, offsetBy: index.upperBound)
+            
+            return String(self[start..<end])
+        }
+    }
+    
+    subscript(index: ClosedRange<Int>) -> Self {
+        get {
+            let start = self.index(self.startIndex, offsetBy: index.lowerBound)
+            let end = self.index(self.startIndex, offsetBy: index.upperBound)
+            
+            return String(self[start...end])
+        }
+    }
+    
+    subscript(index: PartialRangeFrom<Int>) -> Self {
+        get {
+            let start = self.index(self.startIndex, offsetBy: index.lowerBound)
+            
+            return String(self[start..<self.endIndex])
+        }
+    }
+}
