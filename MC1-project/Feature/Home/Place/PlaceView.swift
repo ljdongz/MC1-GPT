@@ -240,7 +240,7 @@ fileprivate struct SaveButton: View {
             startDate: .now,
             endDate: .now,
             isAlert: false,
-            thumbnail: .init(._1_1)
+            thumbnail: .init(.GPT)
         ),
         isCreateMode: true
     )

@@ -28,7 +28,7 @@ struct HomeView: View {
                         homeViewModel.places.filter {
                             // text != "" 인 경우는 text가 포함된 여행지만 필터링
                             // text == ""인 경우 모든 여행지 가져오기
-                            $0.name.hasPrefix(homeViewModel.text) ||
+                            $0.name.contains(homeViewModel.text) ||
                             homeViewModel.text == ""
                         }, id: \.self
                     ) { place in
@@ -63,11 +63,6 @@ fileprivate struct SearchBar: View {
     
     fileprivate var body: some View {
         HStack {
-            
-            Image(._1_1)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
             
             VStack {
                 Spacer()

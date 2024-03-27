@@ -26,7 +26,7 @@ class PlaceViewModel: ObservableObject {
         startDate: Date = Date(),
         endDate: Date = Date(),
         isAlert: Bool = false,
-        thumbnail: Image = .init(._1_1)
+        thumbnail: Image = .init(.GPT)
     ) {
         self.title = title
         self.startDate = startDate

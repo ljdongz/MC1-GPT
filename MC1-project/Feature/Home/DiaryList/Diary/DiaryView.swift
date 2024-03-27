@@ -300,6 +300,7 @@ fileprivate struct PhotoListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
         }
+        
     }
 }
 
@@ -345,7 +346,9 @@ fileprivate struct ContentView: View {
                 Spacer()
                 Button(
                     action: {
-                        diaryViewModel.guideQuestionIndex += 1
+                        withAnimation {
+                            diaryViewModel.guideQuestionIndex += 1
+                        }
                     },
                     label: {
                         Image(systemName: "arrow.clockwise")
